@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      ISBN: {
+      isbn: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -29,7 +29,7 @@ module.exports = {
       },
       created_by: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -41,6 +41,10 @@ module.exports = {
       },
       deleted_at: {
         type: Sequelize.DATE,
+      },
+      available_quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
     });
   },

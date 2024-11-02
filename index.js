@@ -2,11 +2,12 @@ const express = require('express');
 const app = express();
 const bookRoutes = require('./routes/bookRoutes');
 const { errorHandler } = require('./middlewares/errorHandler');
-const borrowerRoutes = require('./routes/borrowerRoutes');
+const userRoutes = require('./routes/userRoutes');
 const borrowRoutes = require('./routes/borrowRoutes');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const mountRoutes = require('./routes/index');
+const reportRoutes = require('./routes/reportRoutes'); // Adjust the import path as needed
 
 app.use(express.json());
 
@@ -14,10 +15,13 @@ app.use(cors());
 app.options('*', cors());
 
 
-app.use('/api/v1/books', bookRoutes);
-app.use('/api/v1/borrowers', borrowerRoutes);
-app.use('/api/v1/borrows', borrowRoutes);
 
+app.use('/api/v1/books', bookRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/borrows', borrowRoutes);
+app.use(reportRoutes);
+
+app.use(errorHandler);
 
 
 // Enable other domains to access your application
@@ -26,7 +30,6 @@ app.options('*', cors());
 
 
 // Global error handler
-app.use(errorHandler);
 
 
 const limiter = rateLimit({

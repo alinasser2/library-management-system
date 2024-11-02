@@ -3,7 +3,7 @@ class BorrowResource {
     constructor(borrow) {
       this.id = borrow.id;
       this.bookId = borrow.bookId;
-      this.borrowerId = borrow.borrowerId;
+      this.userId = borrow.userId;
       this.borrowedAt = borrow.borrowedAt;
       this.returnedAt = borrow.returnedAt;
     }

@@ -16,10 +16,10 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      borrower_id: {
+      user_id: {
         type: Sequelize.STRING,
         references: {
-          model: 'Borrowers',
+          model: 'Users',
           key: 'id',
         },
         onUpdate: 'CASCADE',
@@ -36,6 +36,10 @@ module.exports = {
       },
       return_date: {
         type: Sequelize.DATE,
+      },
+      created_by: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,

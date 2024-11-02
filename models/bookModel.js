@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
       primaryKey: true,
       defaultValue: ulid,
       index: true,
+      defaultValue: ulid,
     },
     title: {
       type: DataTypes.STRING,
@@ -17,7 +18,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ISBN: {
+    isbn: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -30,17 +31,21 @@ module.exports = (sequelize) => {
     location: {
       type: DataTypes.STRING,
     },
+    availableQuantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     timestamps: true,
     paranoid: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    deletedAt: 'deleted_at',
+    underscored: true,
   });
 
   Book.beforeCreate((book) => {
-    book.id = ulid();
+    book.created_at = new Date();
+    book.updated_at = new Date();
   });
+
   Book.beforeUpdate((book) => {
     book.updated_at = new Date();
   });

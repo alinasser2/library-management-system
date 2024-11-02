@@ -1,16 +1,16 @@
 const { body, validationResult, param } = require('express-validator');
 const createErrorResponse = require('../resources/errorResource');
-const { Borrower } = require('../models'); // This assumes you have an index file that exports all modelsconst DuplicateEntryError = require('../exceptions/DuplicateEntryError');
+const { User } = require('../models'); // This assumes you have an index file that exports all modelsconst DuplicateEntryError = require('../exceptions/DuplicateEntryError');
 const NotFoundError = require('../exceptions/NotFoundError');
 
-const addBorrowerValidator = [
+const addUserValidator = [
   body('name').notEmpty().withMessage('Name is required'),
   body('email')
     .isEmail().withMessage('Email is required and should be valid')
     .custom(async (email) => {
-      const existingBorrower = await Borrower.findOne({ where: { email } });
-      if (existingBorrower) {
-        throw new DuplicateEntryError('Borrower with this email already exists');
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser) {
+        throw new DuplicateEntryError('User with this email already exists');
       }
     }),
 
@@ -24,7 +24,7 @@ const addBorrowerValidator = [
   },
 ];
 
-const updateBorrowerValidator = [
+const updateUserValidator = [
   body('name').optional().notEmpty().withMessage('Name cannot be empty'),
   body('email').optional().isEmail().withMessage('Email should be valid'),
   (req, res, next) => {
@@ -36,12 +36,12 @@ const updateBorrowerValidator = [
   },
 ];
 
-const retrieveBorrowerValidator = [
-  // Check that the borrower exists by ID
+const retrieveUserValidator = [
+  // Check that the user exists by ID
   param('id').custom(async (id) => {
-    const borrower = await Borrower.findByPk(id);
-    if (!borrower) {
-      throw new NotFoundError('Borrower not found');
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new NotFoundError('User not found');
     }
   }),
 
@@ -55,12 +55,12 @@ const retrieveBorrowerValidator = [
   },
 ];
 
-const deleteBorrowerValidator = [
-  // Check that the borrower exists by ID
+const deleteUserValidator = [
+  // Check that the user exists by ID
   param('id').custom(async (id) => {
-    const borrower = await Borrower.findByPk(id);
-    if (!borrower) {
-      throw new NotFoundError('Borrower not found');
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new NotFoundError('User not found');
     }
   }),
 
@@ -77,6 +77,6 @@ const deleteBorrowerValidator = [
 
 
 module.exports = {
-  addBorrowerValidator,
-  updateBorrowerValidator,
+  addUserValidator,
+  updateUserValidator,
 };

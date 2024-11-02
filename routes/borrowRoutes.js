@@ -1,12 +1,13 @@
 // routes/borrowRoutes.js
 const express = require('express');
 const borrowController = require('../controllers/borrowController');
-const { borrowBookValidator } = require('../validators/borrowValidators');
+const { borrowBookValidator, returnBookValidator } = require('../validators/borrowValidators');
 
 const router = express.Router();
 
 router.post('/borrow', borrowBookValidator, borrowController.borrowBook);
-router.put('/return/:id', borrowController.returnBook);
+router.patch('/return/:id', returnBookValidator, borrowController.returnBook);
 router.get('/', borrowController.listBorrows);
+router.get('/user/:userId', borrowController.listUserBorrowedBooks);
 
 module.exports = router;

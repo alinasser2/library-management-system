@@ -1,5 +1,6 @@
 const DuplicateEntryError = require('../exceptions/DuplicateEntryError');
 const NotFoundError = require('../exceptions/NotFoundError');
+const FutureDateError = require('../exceptions/FutureDateError');
 const ErrorResource = require('../resources/errorResource');
 
 const errorHandler = (err, req, res, next) => {
@@ -13,7 +14,11 @@ const errorHandler = (err, req, res, next) => {
     return res.status(err.statusCode).json(ErrorResource(err.message, err.statusCode));
   }
 
-  // Handle validation errors
+  if (err instanceof FutureDateError) {
+    return res.status(err.statusCode).json(ErrorResource(err.message, err.statusCode));
+  }
+
+  // // Handle validation errors
   if (err.statusCode === 400 && err.errors) {
     return res.status(400).json(ErrorResource(err.message, 400, err.errors));
   }

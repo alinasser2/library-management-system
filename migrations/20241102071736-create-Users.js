@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('borrowers', {
+    await queryInterface.createTable('Users', {
       id: {
         type: Sequelize.STRING,
         primaryKey: true,
@@ -18,24 +18,31 @@ module.exports = {
       },
       created_by: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
       updated_at: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
       },
       deleted_at: {
         type: Sequelize.DATE,
+        allowNull: true,
+      },
+      role: {
+        type: Sequelize.ENUM('user', 'admin'),
+        allowNull: false,
+        defaultValue: 'user',
       },
     });
-    
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Borrowers');
+    await queryInterface.dropTable('Users');
   }
 };

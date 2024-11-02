@@ -10,8 +10,13 @@ class BookRepository {
     return await Book.findByPk(id);
   }
 
+  async search(query) {
+    return await Book.findAll({ where: query });
+  }
+
   async create(bookData) {
-    return await Book.create(bookData);
+    bookData.availableQuantity = bookData.quantity;
+    return Book.create(bookData);
   }
 
   async update(id, bookData) {
@@ -29,17 +34,6 @@ class BookRepository {
     return await Book.findOne({ where: { ISBN } });
   }
 
-  // search by title, author or ISBN
- async search(query) {
-  const whereClause = {};
-  for (const [key, value] of Object.entries(query)) {
-    whereClause[key] = value;
-  }
-  const books = await Book.findAll({
-    where: whereClause
-  });
-  return books;
- }
 
   async findByAuthor(author) {
     return await Book.findAll({ where: { author : { [Op.like]: `%${author.trim()}%` } } });

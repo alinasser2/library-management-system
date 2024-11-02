@@ -1,6 +1,6 @@
 const { Borrow } = require('../models');
 const { Book } = require('../models');
-const { Borrower } = require('../models');
+const { User } = require('../models');
 
 class BorrowRepository {
   async createBorrowRecord(data) {
@@ -12,9 +12,18 @@ class BorrowRepository {
     return Borrow.findByPk(id);
   }
 
-  async findAllBorrows() {
-    return Borrow.findAll({ include: [Book, Borrower] });
+  async findBorrowsByUserId(userId) {
+    return Borrow.findAll({
+      where: {
+        userId,
+        return_date: null, // Only get borrows that have not been returned
+      },
+    });
   }
+
+
+  
+
 }
 
 module.exports = new BorrowRepository();

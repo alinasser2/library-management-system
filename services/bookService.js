@@ -1,12 +1,9 @@
 const bookRepository = require('../repositories/bookRepository');
+const NotFoundError = require('../exceptions/NotFoundError');
 
 class BookService {
   async listAllBooks() {
     return await bookRepository.findAll();
-  }
-
-  async getBook(id) {
-    return await bookRepository.findById(id);
   }
 
   async addBook(bookData) {
@@ -14,6 +11,13 @@ class BookService {
   }
 
   async updateBook(id, bookData) {
+    const book = await bookRepository.findById(id);
+    if (bookData.quantity !== undefined && bookData.availableQuantity === undefined) {
+      console.log('book.quantity', book.quantity);
+      const quantityDifference = bookData.quantity - book.quantity;
+      bookData.availableQuantity = book.availableQuantity + quantityDifference;
+    }
+    console.log('bookData', bookData);
     return await bookRepository.update(id, bookData);
   }
 
@@ -21,12 +25,15 @@ class BookService {
     return await bookRepository.delete(id);
   }
 
-  async getBookByISBN(ISBN) {
-    return await bookRepository.findByISBN(ISBN);
-  }
 
   async searchBook(query) {
-    return await bookRepository.search(query);
+    const books = await bookRepository.search(query);
+    return books;
+  }
+
+  async getBookByISBN(ISBN) {
+    const book = await bookRepository.findByISBN(ISBN);
+    return book;
   }
   
 }

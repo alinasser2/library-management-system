@@ -1,16 +1,22 @@
 const express = require('express');
-const { addBookValidator, updateBookValidator, deleteBookValidator , retrieveBookValidator} = require('../validators/bookValidator');
+const { addBookValidator, updateBookValidator, deleteBookValidator, retrieveBookValidator} = require('../validators/bookValidator');
 const bookController = require('../controllers/bookController');
 
 const router = express.Router();
 
-// Retrieve all books and add a new book
-router.route('/').get(bookController.listBooks).post(addBookValidator, bookController.addBook)
+// List all books
+router.get('/', bookController.listBooks);
 
-// Retrieve, update and delete a book
-router.route('/:id').get(retrieveBookValidator, bookController.getBook).put(updateBookValidator, bookController.updateBook).delete(deleteBookValidator, bookController.deleteBook)
+// Get a specific book by ID
+router.get('/search/', retrieveBookValidator, bookController.getBook);
 
-// Search book by title
-// router.get('/search/:query', bookController.searchBook)
+// Add a new book
+router.post('/', addBookValidator, bookController.addBook);
+
+// Update a book by ID
+router.patch('/:id', updateBookValidator, bookController.updateBook);
+
+// Delete a book by ID
+router.delete('/:id', deleteBookValidator, bookController.deleteBook);
 
 module.exports = router;

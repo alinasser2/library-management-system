@@ -14,10 +14,10 @@ class BookController {
   }
 
   async getBook(req, res) {
-    const book = await bookService.getBook(req.params.id);
+    const books = await bookService.searchBook(req.query);
     res.json({
       status: 'success',
-      data: new BookResource(book),
+      data: BookResource.collection(books),
     });
   }
 
