@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Borrowers', {
+    await queryInterface.createTable('borrowers', {
       id: {
         type: Sequelize.STRING,
         primaryKey: true,
@@ -15,11 +15,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-      },
-      registered_date: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW,
       },
       created_by: {
         type: Sequelize.STRING,

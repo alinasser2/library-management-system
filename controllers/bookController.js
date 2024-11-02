@@ -1,13 +1,60 @@
 const bookService = require('../services/bookService');
+const BookResource = require('../resources/BookResource');
+
 
 class BookController {
 
+  
+  async listBooks(req, res) {
+    const books = await bookService.listAllBooks();
+    res.json({
+      status: 'success',
+      data: BookResource.collection(books),
+    });
+  }
+
+  async getBook(req, res) {
+    const book = await bookService.getBook(req.params.id);
+    res.json({
+      status: 'success',
+      data: new BookResource(book),
+    });
+  }
+
   async addBook(req, res) {
     const bookData = req.body;
-    await bookService.addBook(bookData);
-    res.status(201).json({ message: 'Book added successfully' });
+    const newBook = await bookService.addBook(bookData);
+    res.status(201).json({
+      status: 'success',
+      data: new BookResource(newBook),
+    });
   }
-  
+
+  async updateBook(req, res) {
+    const bookData = req.body;
+    const updatedBook = await bookService.updateBook(req.params.id, bookData);
+    res.json({
+      status: 'success',
+      data: new BookResource(updatedBook),
+    });
+  }
+
+  async deleteBook(req, res) {
+    await bookService.deleteBook(req.params.id);
+    res.json({
+      status: 'success',
+      message: 'Book deleted successfully',
+    });
+  }
+
+  // serach book by title
+  async searchBook(req, res) {
+    const books = await bookService.searchBook(req.query);
+    res.json({
+      status: 'success',
+      data: BookResource.collection(books),
+    });
+  }
 }
 
 module.exports = new BookController();

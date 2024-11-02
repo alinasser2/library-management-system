@@ -1,18 +1,47 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const sequelize = require('./config/sequelize');
-const bookRouter = require('./routes/bookRoutes');
-
-dotenv.config();
-
 const app = express();
+const bookRoutes = require('./routes/bookRoutes');
+const { errorHandler } = require('./middlewares/errorHandler');
+const borrowerRoutes = require('./routes/borrowerRoutes');
+const borrowRoutes = require('./routes/borrowRoutes');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const mountRoutes = require('./routes/index');
+
 app.use(express.json());
-app.use('/api/v1/books', bookRouter);
+
+app.use(cors());
+app.options('*', cors());
+
+
+app.use('/api/v1/books', bookRoutes);
+app.use('/api/v1/borrowers', borrowerRoutes);
+app.use('/api/v1/borrows', borrowRoutes);
+
+
+
+// Enable other domains to access your application
+app.use(cors());
+app.options('*', cors());
+
+
+// Global error handler
+app.use(errorHandler);
+
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message:
+    'Too many accounts created from this IP, please try again after an hour',
+});
+
+app.all('*', (req, res, next) => {
+  next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
+});
+
 
 const PORT = process.env.PORT || 3000;
-
-sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
