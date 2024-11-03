@@ -120,6 +120,20 @@ single responsibility : the code is partitioned to multiple layers
 
 -  **Export Monthly Borrowing Data**: Generate a report for all borrowing activities within the last month.
 
+
+
+
+## Optional Features
+
+  
+
+1.  **Rate Limiting**: Implemented on selected endpoints to prevent abuse.
+
+2.  **CSV/XLSX Export**: Export reports in CSV or XLSX formats for analytical purposes.
+
+3.  **Docker**: A `docker-compose.yml` file is available for containerized deployment.
+
+  
   
 
 ## Installation
@@ -247,17 +261,6 @@ The API returns structured error responses for validation errors, missing resour
 
   
 
-## Optional Features
-
-  
-
-1.  **Rate Limiting**: Implemented on selected endpoints to prevent abuse.
-
-2.  **CSV/XLSX Export**: Export reports in CSV or XLSX formats for analytical purposes.
-
-3.  **Docker**: A `docker-compose.yml` file is available for containerized deployment.
-
-  
 
 ## Schema Diagram
 
