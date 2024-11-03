@@ -8,7 +8,7 @@ class AppError extends Error {
     }
   }
   
-  class NotFoundError extends AppError {
+  class CustomException extends AppError {
     constructor(message = 'Resource not found') {
       super(message, 404);
     }
@@ -24,7 +24,7 @@ class AppError extends Error {
   
   module.exports = {
     AppError,
-    NotFoundError,
+    CustomException,
     ValidationError,
   };
   

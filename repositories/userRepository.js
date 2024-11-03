@@ -20,6 +20,10 @@ class UserRepository {
   async delete(id) {
     return User.destroy({ where: { id } });
   }
+
+  async findByEmail(email) {
+    return User.findOne({ where: { email } });
+  }
 }
 
 module.exports = new UserRepository();

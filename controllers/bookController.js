@@ -1,5 +1,6 @@
 const bookService = require('../services/bookService');
 const BookResource = require('../resources/BookResource');
+const asyncHandler = require('../utils/asyncHandler');
 
 
 class BookController {
@@ -14,6 +15,7 @@ class BookController {
   }
 
   async getBook(req, res) {
+    console.log('getBook');
     const books = await bookService.searchBook(req.query);
     res.json({
       status: 'success',
@@ -39,7 +41,8 @@ class BookController {
     });
   }
 
-  async deleteBook(req, res) {
+  async deleteBook(req, res, next) {
+    await bookService.checkBookExists(req.params.id);
     await bookService.deleteBook(req.params.id);
     res.json({
       status: 'success',

@@ -54,7 +54,7 @@ const reportRepository = {
     });
   },
 
-  // Additional function to get all borrows in the last month
+  // function to get all borrows in the last month
   async getAllBorrowsLastMonth() {
     const end = new Date();
     const start = new Date();
@@ -63,7 +63,7 @@ const reportRepository = {
     return await this.getBorrowingProcessReport(start, end);
   },
 
-  // Additional function to get overdue borrows in the last month
+  // function to get overdue borrows in the last month
   async getOverdueBorrowsLastMonth() {
     const end = new Date();
     const start = new Date();

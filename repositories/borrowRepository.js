@@ -21,6 +21,16 @@ class BorrowRepository {
     });
   }
 
+  async findBorrowByBookIdAndUserId(bookId, userId) {
+    return Borrow.findOne({
+      where: {
+        bookId,
+        userId,
+        returnDate: null,
+      },
+    });
+  }
+
 
   
 

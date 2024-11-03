@@ -11,6 +11,7 @@ class BookRepository {
   }
 
   async search(query) {
+    console.log(query);
     return await Book.findAll({ where: query });
   }
 
