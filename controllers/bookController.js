@@ -15,7 +15,6 @@ class BookController {
   }
 
   async getBook(req, res) {
-    console.log('getBook');
     const books = await bookService.searchBook(req.query);
     res.json({
       status: 'success',

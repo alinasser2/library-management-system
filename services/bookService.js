@@ -38,7 +38,6 @@ class BookService {
 
 
   async searchBook(query) {
-    console.log(query);
     const books = await bookRepository.search(query);
     return books;
   }

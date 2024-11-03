@@ -4,7 +4,6 @@ const { User } = require('../models');
 
 class BorrowRepository {
   async createBorrowRecord(data) {
-    console.log(data);
     return Borrow.create(data);
   }
 
