@@ -39,9 +39,9 @@ const limiter = rateLimit({
     'Too many accounts created from this IP, please try again after an hour',
 });
 
-app.all('*', (req, res, next) => {
-  next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
-});
+// app.all('*', (req, res, next) => {
+//   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
+// });
 
 
 const PORT = process.env.PORT || 3000;

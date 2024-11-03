@@ -4,7 +4,7 @@ const reportController = require('../controllers/reportController'); // Adjust t
 const router = express.Router();
 
 // Route to generate borrowing reports
-router.get('/report/borrowing', reportController.getBorrowingReport);
-router.get('/report/export', reportController.exportBorrowingReport);
+
+router.get('/report/borrowing/export', reportController.exportBorrowingReportToCSV);
 
 module.exports = router;

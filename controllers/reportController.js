@@ -1,25 +1,29 @@
 const reportService = require('../services/reportService');
+const createErrorResponse = require('../resources/errorResource');
 
 const reportController = {
-  getBorrowingReport: async (req, res) => {
+
+  // Export borrowing report to CSV file
+  async exportBorrowingReportToCSV(req, res) {
+    const { startDate, endDate } = req.query;
+
+    if (!startDate || !endDate) {
+      return res.status(400).json(createErrorResponse('Please provide both startDate and endDate', 400));
+    }
+
     try {
-      const { startDate, endDate } = req.query;
-      const report = await reportService.generateBorrowingReport(startDate, endDate);
-      res.status(200).json(report);
+      const filePath = await reportService.exportBorrowingReportToCSV(startDate, endDate);
+
+      res.download(filePath, 'borrowing_report.csv', (err) => {
+        if (err) {
+          res.status(500).json(createErrorResponse('Failed to download the file', 500));
+        }
+      });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(500).json(createErrorResponse(error.message, 500));
     }
   },
 
-  exportBorrowingReport: async (req, res) => {
-    try {
-      const { startDate, endDate } = req.query;
-      const filePath = await reportService.exportToCSV(startDate, endDate);
-      res.download(filePath);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },
 };
 
 module.exports = reportController;
