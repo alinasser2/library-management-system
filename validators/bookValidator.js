@@ -16,11 +16,11 @@ const addBookValidator = [
   async (req, res, next) => {
     try {
       const { isbn } = req.body;
-      const existingBook = await BookService.getBookByISBN(isbn); // Adjust this method to your actual service method
+      // const existingBook = await BookService.getBookByISBN(isbn); // Adjust this method to your actual service method
 
-      if (existingBook) {
-        throw new DuplicateEntryError('A book with this ISBN already exists');
-      }
+      // if (existingBook) {
+      //   throw new DuplicateEntryError('A book with this ISBN already exists');
+      // }
       
       next();
     } catch (error) {
@@ -41,10 +41,10 @@ const addBookValidator = [
 const updateBookValidator = [
   // Check that the book exists by ID
   param('id').custom(async (id) => {
-    const book = await Book.findByPk(id);
-    if (!book) {
-      throw new NotFoundError('Book not found');
-    }
+    // const book = await Book.findByPk(id);
+    // if (!book) {
+    //   throw new NotFoundError('Book not found');
+    // }
   }),
 
   // Other validations

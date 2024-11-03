@@ -1,5 +1,5 @@
 const userService = require('../services/userService');
-const UserResource = require('../resources/UserResource');
+const UserResource = require('../resources/userResource');
 
 class UserController {
   async listUsers(req, res) {
