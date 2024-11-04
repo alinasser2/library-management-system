@@ -1,4 +1,3 @@
-// resources/BookResource.js
 class BookResource {
     constructor(book) {
       this.id = book.id;
@@ -8,8 +7,8 @@ class BookResource {
       this.quantity = book.quantity;
       this.availableQuantity = book.availableQuantity;
       this.location = book.location;
-      this.createdAt = book.created_at; // Assuming you have this in your model
-      this.updatedAt = book.updated_at; // Assuming you have this in your model
+      this.createdAt = book.created_at;
+      this.updatedAt = book.updated_at;
     }
   
     static collection(books) {
