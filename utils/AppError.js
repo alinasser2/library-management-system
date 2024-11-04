@@ -3,7 +3,7 @@ class AppError extends Error {
     constructor(message, statusCode) {
       super(message);
       this.statusCode = statusCode;
-      this.isOperational = true; // To distinguish operational errors from programming errors
+      this.isOperational = true; 
       Error.captureStackTrace(this, this.constructor);
     }
   }
@@ -20,7 +20,6 @@ class AppError extends Error {
     }
   }
   
-  // You can add more custom errors as needed
   
   module.exports = {
     AppError,
